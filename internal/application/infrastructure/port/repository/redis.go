@@ -14,12 +14,6 @@ type RedisPort interface {
 	// SetLogger sets logging call-back function
 	SetLogger(LogFunc func(ctx context.Context, logData *pb_logging.LogData) (*pb_logging.LoggingResult, error))
 
-	// DeleteUserPasswordByUserId hard-deletes the given user id in the redis.
-	DeleteUserPasswordByUserId(ctx context.Context, userId uuid.UUID) error
-
 	// GetUserPasswordByUserId returns active password of the given user.
 	GetUserPasswordByUserId(ctx context.Context, userId uuid.UUID) (me.UserPassword, error)
-
-	// ChangePassword changes the poassword of the given user in the redis.
-	ChangePassword(ctx context.Context, userPassword me.UserPassword) error
 }
