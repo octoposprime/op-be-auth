@@ -117,42 +117,6 @@ func (a DbAdapter) GetUsersByFilter(ctx context.Context, userFilter me.UserFilte
 	}, nil
 }
 
-// SaveUser insert a new user or update the existing one in the database.
-func (a DbAdapter) SaveUser(ctx context.Context, user me.User) (me.User, error) {
-	userDbMapper := map_repo.NewUserFromEntity(user)
-	qry := a.DbClient
-	if user.Id.String() != "" && user.Id != (uuid.UUID{}) {
-		qry = qry.Omit("created_at")
-	}
-	userId, _ := ctx.Value(smodel.QueryKeyUid).(string)
-	if userDbMapper.ID != (uuid.UUID{}) {
-		userDbMapper.UpdatedBy, _ = uuid.Parse(userId)
-	} else {
-		userDbMapper.CreatedBy, _ = uuid.Parse(userId)
-	}
-	result := qry.Save(&userDbMapper)
-	if result.Error != nil {
-		userId, _ := ctx.Value(smodel.QueryKeyUid).(string)
-		go a.Log(context.Background(), me.NewLogData().GenerateLogData(pb_logging.LogType_LogTypeERROR, "SaveUser", userId, result.Error.Error()))
-		return me.User{}, result.Error
-	}
-	return *userDbMapper.ToEntity(), nil
-}
-
-// DeleteUser soft-deletes the given user in the database.
-func (a DbAdapter) DeleteUser(ctx context.Context, user me.User) (me.User, error) {
-	userDbMapper := map_repo.NewUserFromEntity(user)
-	userId, _ := ctx.Value(smodel.QueryKeyUid).(string)
-	userDbMapper.DeletedBy, _ = uuid.Parse(userId)
-	result := a.DbClient.Delete(&userDbMapper)
-	if result.Error != nil {
-		userId, _ := ctx.Value(smodel.QueryKeyUid).(string)
-		go a.Log(context.Background(), me.NewLogData().GenerateLogData(pb_logging.LogType_LogTypeERROR, "DeleteUser", userId, result.Error.Error()))
-		return me.User{}, result.Error
-	}
-	return *userDbMapper.ToEntity(), nil
-}
-
 // GetUserPasswordByUserId returns active password of the given user.
 func (a DbAdapter) GetUserPasswordByUserId(ctx context.Context, userId uuid.UUID) (me.UserPassword, error) {
 	var userPasswordsDbMapper *map_repo.UserPasswords
@@ -171,26 +135,4 @@ func (a DbAdapter) GetUserPasswordByUserId(ctx context.Context, userId uuid.UUID
 	}
 	err := mo.ErrorUserPasswordNotFound
 	return me.UserPassword{}, err
-}
-
-// ChangePassword changes the given user password in the database.
-func (a DbAdapter) ChangePassword(ctx context.Context, userPassword me.UserPassword) (me.UserPassword, error) {
-	userPasswordDbMapper := map_repo.NewUserPasswordFromEntity(userPassword)
-	qry := a.DbClient
-	if userPassword.Id.String() != "" && userPassword.Id != (uuid.UUID{}) {
-		qry = qry.Omit("created_at")
-	}
-	userId, _ := ctx.Value(smodel.QueryKeyUid).(string)
-	if userPasswordDbMapper.ID != (uuid.UUID{}) {
-		userPasswordDbMapper.UpdatedBy, _ = uuid.Parse(userId)
-	} else {
-		userPasswordDbMapper.CreatedBy, _ = uuid.Parse(userId)
-	}
-	result := qry.Save(&userPasswordDbMapper)
-	if result.Error != nil {
-		userId, _ := ctx.Value(smodel.QueryKeyUid).(string)
-		go a.Log(context.Background(), me.NewLogData().GenerateLogData(pb_logging.LogType_LogTypeERROR, "ChangePassword", userId, result.Error.Error()))
-		return me.UserPassword{}, result.Error
-	}
-	return *userPasswordDbMapper.ToEntity(), nil
 }
