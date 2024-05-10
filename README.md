@@ -1,5 +1,5 @@
 # op-be-auth
-The User and Auth Services for the Backend Layer of OctopOSPrime - Computed Microservices
+The Auth Services for the Backend Layer of OctopOSPrime - Computed Microservices
 
 [![Build - Test](https://github.com/octoposprime/op-be-auth/actions/workflows/ci.yml/badge.svg)](https://github.com/octoposprime/op-be-auth/actions/workflows/ci.yml)
 [![Docker Image Publish](https://github.com/octoposprime/op-be-auth/actions/workflows/cd.yml/badge.svg)](https://github.com/octoposprime/op-be-auth/actions/workflows/cd.yml)
