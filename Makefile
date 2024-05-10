@@ -12,7 +12,7 @@ POSTGRES_USERNAME?=op#Postgres Db User Name
 POSTGRES_PASSWORD?=op#Postgres Db Password
 JWT_SECRET_KEY?=op#Jwt Secret Key
 REDIS_PASSWORD?=op#Redis Password
-LOCAL_PORT=18082#Grpc port for local
+LOCAL_PORT=18084#Grpc port for local
 CONTAINER_PORT=18080#Grpc port in container
 NETWORK=op#Docker network name
 
