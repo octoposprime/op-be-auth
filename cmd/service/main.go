@@ -133,7 +133,7 @@ func main() {
 		go pc_probe.NewProbeAPI().Serve(internalConfig.Restapi.ProbePort)
 	}
 	wg.Add(1)
-	go pc_grpc.NewGrpc(queryHandler, commandHandler).Serve(internalConfig.Grpc.UserPort)
+	go pc_grpc.NewGrpc(queryHandler, commandHandler).Serve(internalConfig.Grpc.AuthenticationPort)
 	wg.Wait()
 
 }
