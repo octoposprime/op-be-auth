@@ -6,5 +6,5 @@ restapi:
 grpc:
   logger_host: "localhost"
   logger_port: "18081"
-  user_host: "localhost"
-  user_port: "18082"
+  authentication_host: "localhost"
+  authentication_port: "18084"
