@@ -5,5 +5,4 @@ package application
 type CommandPort interface {
 	LoggingCommandPort
 	AuthenticationCommandPort
-	UserCommandPort
 }
