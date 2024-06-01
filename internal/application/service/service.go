@@ -28,6 +28,5 @@ func NewService(domainService *ds.Service, dbRepository ip_repo.DbPort, redisRep
 	}
 	service.DbPort.SetLogger(service.Log)
 	service.EBusPort.SetLogger(service.Log)
-	service.EventListen()
 	return service
 }
