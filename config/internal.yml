@@ -6,5 +6,7 @@ restapi:
 grpc:
   logger_host: "op-be-logging"
   logger_port: "18080"
- authentication_host: "op-be-auth"
- authentication_port: "18080"
+  user_host: "op-be-user"
+  user_port: "18080"
+  authentication_host: "op-be-auth"
+  authentication_port: "18080"
