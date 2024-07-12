@@ -35,7 +35,7 @@ func main() {
 	fmt.Println("dbConfig.PostgresDb.Database", dbConfig.PostgresDb.Database)
 	var err error
 
-	fmt.Println("Starting User Service...")
+	fmt.Println("Starting Auth Service...")
 	dbClient, err := tgorm.NewGormClient(tgorm.PostgresGormClient).Connect(dbConfig.PostgresDb.Host, dbConfig.PostgresDb.Port, dbConfig.PostgresDb.UserName, dbConfig.PostgresDb.Password, dbConfig.PostgresDb.Database)
 	if err != nil {
 		panic(err)
